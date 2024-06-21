@@ -28,7 +28,7 @@ const Reportes = () => {
     const csvData = data.map(entry => ({
       Nombre: entry.nombre,
       Cédula: entry.cedula,
-      Auto: entry.auto,
+      Auto: entry.vehiculo,
       Fecha: entry.fecha,
     }));
 
