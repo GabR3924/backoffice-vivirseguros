@@ -1,0 +1,92 @@
+/* Vendidos.css */
+.usuarios {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .usuarios h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .filtro-fecha {
+    margin-bottom: 20px;
+  }
+  
+  .filtro-fecha input[type='date'] {
+    padding: 8px;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .filtro-fecha button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .filtro-fecha button:hover {
+    background-color: #0056b3;
+  }
+  
+  .usuario {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .usuario .fecha {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .usuario button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .usuario button:hover {
+    background-color: #218838;
+  }
+  
+  .info-adicional {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .info-adicional p {
+    margin-bottom: 5px;
+  }
+  
+  .info-adicional strong {
+    font-weight: bold;
+  }
+  
+  .info-adicional ul {
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+  
+  .info-adicional li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+  }
+  
+  .info-adicional img {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
+  }
+  

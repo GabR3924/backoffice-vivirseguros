@@ -1,0 +1,65 @@
+/* src/components/Nav.css */
+
+.nav {
+    width: 15%;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+  }
+  
+  .logo-nav{
+    width: 60%;
+  }
+
+  .nav ul {
+    list-style-type: none;
+    width: 80%;
+}
+
+  .nav li {
+    font-size: 25px;
+  }
+  
+  .nav a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Media Query for smaller screens */
+  @media (max-width: 680px) {
+    .nav {
+      width: 100vw;
+      height: auto;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  
+    .logo-nav{
+       display: none;
+    }
+
+    .nav ul {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-around;
+    }
+  
+    .nav li {
+      margin: 10px;
+    }
+  }
+  
