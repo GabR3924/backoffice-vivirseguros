@@ -13,7 +13,7 @@ const Login = ({ setAuthenticated }) => {
     setError('');
 
     try {
-      const response = await axios.post('https://vivirseguros.gocastgroup.com:3100/login', { username, password });
+      const response = await axios.post('https://rcv.gocastgroup.com:3100/login', { username, password });
       setAuthenticated(true);
       navigate('/'); // Redirige al usuario a la página principal después del login
     } catch (error) {

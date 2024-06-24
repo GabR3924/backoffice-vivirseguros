@@ -25,7 +25,7 @@ const Asociados = () => {
       setTiendas(cachedTiendas);
     } else {
       axios
-        .get("https://vivirseguros.gocastgroup.com:3100/tiendas")
+        .get("https://rcv.gocastgroup.com:3100/tiendas")
         .then((response) => {
           if (response.data) {
             console.log("Tiendas obtenidas:", response.data);
@@ -51,7 +51,7 @@ const Asociados = () => {
   const handleCreateTienda = () => {
     axios
       .post(
-        "https://vivirseguros.gocastgroup.com:3100/agregar-intermediario",
+        "https://rcv.gocastgroup.com:3100/agregar-intermediario",
         nuevaTienda
       )
       .then((response) => {
