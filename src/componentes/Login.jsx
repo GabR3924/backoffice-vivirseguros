@@ -13,15 +13,17 @@ const Login = ({ setAuthenticated }) => {
     setError('');
 
     try {
-      const response = await axios.post('https://vivirseguros.gocastgroup.com:3100/login', { username, password });
+      console.log("Intentando iniciar sesión con:", username, password); // Verifica usuario y contraseña antes de enviar la solicitud
+      
+      const response = await axios.post('https://rcv.gocastgroup.com:3100/login', { username, password });
+      
+      console.log("Respuesta del servidor:", response); // Verifica la respuesta del servidor
+      
       setAuthenticated(true);
       navigate('/'); // Redirige al usuario a la página principal después del login
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setError("Nombre de usuario o contraseña incorrectos.");
-      } else {
-        setError("Error: Ha ocurrido un problema durante el inicio de sesión.");
-      }
+      console.error('Error durante el inicio de sesión:', error);
+      setError('Error: Ha ocurrido un problema durante el inicio de sesión.');
     }
   };
 
@@ -45,7 +47,7 @@ const Login = ({ setAuthenticated }) => {
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
-      {error && <p style={{color: 'red'}}>{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };

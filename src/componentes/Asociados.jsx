@@ -17,20 +17,20 @@ const Asociados = () => {
   const [indexOfFirstItem, setIndexOfFirstItem] = useState(0);
   const [indexOfLastItem, setIndexOfLastItem] = useState(10);
 
-  // Función para obtener las tiendas desde el servidor o el localStorage
   const obtenerTiendas = () => {
-    const cachedTiendas = JSON.parse(localStorage.getItem("tiendas"));
-
-    if (cachedTiendas) {
-      setTiendas(cachedTiendas);
-    } else {
+    // const cachedTiendas = JSON.parse(localStorage.getItem("tiendas"));
+  
+    // if (cachedTiendas) {
+    //   setTiendas(cachedTiendas);
+    // } else {
+      console.log("Llamando al servidor para obtener tiendas...");
       axios
-        .get("https://vivirseguros.gocastgroup.com:3100/tiendas")
+        .get("https://rcv.gocastgroup.com:3100/intermediarios")
         .then((response) => {
           if (response.data) {
             console.log("Tiendas obtenidas:", response.data);
             setTiendas(response.data);
-            localStorage.setItem("tiendas", JSON.stringify(response.data));
+            // localStorage.setItem("tiendas", JSON.stringify(response.data));
           } else {
             console.error(
               "La respuesta del servidor no contiene los datos esperados."
@@ -40,8 +40,9 @@ const Asociados = () => {
         .catch((error) => {
           console.error("Error al obtener las tiendas:", error);
         });
-    }
+    // }
   };
+  
 
   useEffect(() => {
     // Llamar a obtenerTiendas al montar el componente
@@ -50,8 +51,7 @@ const Asociados = () => {
 
   const handleCreateTienda = () => {
     axios
-      .post(
-        "https://vivirseguros.gocastgroup.com:3100/agregar-intermediario",
+      .post("https://rcv.gocastgroup.com:3100/agregar-intermediarios",
         nuevaTienda
       )
       .then((response) => {
@@ -129,7 +129,7 @@ const Asociados = () => {
             <div className="edit-tienda">
               <input
                 type="text"
-                value={tienda.NOMBRE}
+                value={tienda.nombre}
                 onChange={(e) =>
                   handleTiendaInputChange(tienda.id, e.target.value)
                 }
@@ -142,12 +142,12 @@ const Asociados = () => {
             </div>
           ) : (
             <div className="view-tienda">
-              <span>{tienda.CODIGO}</span>
-              <span>{tienda.NOMBRE}</span>
+              <span>{tienda.codigo}</span>
+              <span>{tienda.nombre}</span>
               {tienda.qr ? (
                 <img
                   src={`data:image/png;base64,${tienda.qr}`}
-                  alt={`QR de ${tienda.NOMBRE}`}
+                  alt={`QR de ${tienda.nombre}`}
                 />
               ) : (
                 <p>No QR Available</p>
