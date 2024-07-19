@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import '../CSS/Asociados.css'
+import urls from "../routes";
 
 const Asociados = () => {
   const [tiendas, setTiendas] = useState([]);
@@ -51,7 +52,7 @@ const Asociados = () => {
 
   const handleCreateTienda = () => {
     axios
-      .post("https://rcv.gocastgroup.com:3100/agregar-intermediarios",
+      .post(urls.PostIntermediarios,
         nuevaTienda
       )
       .then((response) => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../CSS/Vendidos.css'; // Asegúrate de que la ruta sea correcta y el nombre del archivo sea exacto
+import urls from '../routes';
 
 export default function Vendidos() {
   const [usuarios, setUsuarios] = useState([]);
@@ -9,7 +10,7 @@ export default function Vendidos() {
 
   useEffect(() => {
     axios
-      .get('https://rcv.gocastgroup.com:3100/obtenerDatos')
+      .get("https://rcv.gocastgroup.com:3000/obtenerDatos")
       .then((response) => {
         console.log('usuarios', response.data);
         setUsuarios(response.data);

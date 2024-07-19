@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../CSS/Login.css';
+import urls from '../routes';
 
 const Login = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -13,11 +15,10 @@ const Login = ({ setAuthenticated }) => {
     setError('');
 
     try {
-      console.log("Intentando iniciar sesión con:", username, password); // Verifica usuario y contraseña antes de enviar la solicitud
+      console.log("Intentando iniciar sesión con:", username, password); 
+      const response = await axios.post("https://rcv.gocastgroup.com:3100/login", { username, password });
       
-      const response = await axios.post('https://rcv.gocastgroup.com:3100/login', { username, password });
-      
-      console.log("Respuesta del servidor:", response); // Verifica la respuesta del servidor
+      console.log(response.data);
       
       setAuthenticated(true);
       navigate('/'); // Redirige al usuario a la página principal después del login
@@ -28,7 +29,7 @@ const Login = ({ setAuthenticated }) => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input 
@@ -47,7 +48,7 @@ const Login = ({ setAuthenticated }) => {
         />
         <button type="submit">Iniciar Sesión</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
     </div>
   );
 };

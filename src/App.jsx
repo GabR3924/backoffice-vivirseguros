@@ -12,20 +12,28 @@ function App() {
 
   return (
     <Router>
-      {/* Renderizar el componente Nav solo si el usuario está autenticado */}
-      {authenticated && <Nav />}
-      <div className="contenido">
+      {authenticated ? (
+        <div id="app-container">
+          {/* Renderizar el componente Nav solo si el usuario está autenticado */}
+          <div className="nav"><Nav /></div>
+          <div className="contenido">
+            <Routes>
+              {/* Rutas protegidas */}
+              <Route path="/" element={<Asociados />} />
+              <Route path="/asociados" element={<Asociados />} />
+              <Route path="/reportes" element={<Reportes />} />
+              <Route path="/vendidos" element={<Vendidos />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
+        </div>
+      ) : (
         <Routes>
           {/* Ruta de inicio de sesión */}
           <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
-          
-          {/* Rutas protegidas */}
-          <Route path="/" element={authenticated ? <Asociados /> : <Navigate to="/login" />} />
-          <Route path="/asociados" element={authenticated ? <Asociados /> : <Navigate to="/login" />} />
-          <Route path="/reportes" element={authenticated ? <Reportes /> : <Navigate to="/login" />} />
-          <Route path="/vendidos" element={authenticated ? <Vendidos /> : <Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </div>
+      )}
     </Router>
   );
 }
