@@ -3,7 +3,7 @@
 const urls = {
     PostIntermediarios: "https://localhost:3000/vivirseguros/agregar-intermediarios",
     GetDatos: "https://localhost:3000/vivirseguros/obtener-datos",
-    PostLogin: "https://localhost:3000/vivirseguros/login",
+    PostLogin: "https://localhost:3000/login",
 };
 
 // const urls = {
