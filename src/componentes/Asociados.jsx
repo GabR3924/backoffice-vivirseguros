@@ -26,7 +26,7 @@ const Asociados = () => {
     // } else {
       console.log("Llamando al servidor para obtener tiendas...");
       axios
-        .get("https://rcv.gocastgroup.com:3100/intermediarios")
+        .get("https://localhost:3000/vivirseguros/get-intermediarios")
         .then((response) => {
           if (response.data) {
             console.log("Tiendas obtenidas:", response.data);
