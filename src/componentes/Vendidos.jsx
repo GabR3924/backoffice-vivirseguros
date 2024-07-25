@@ -10,7 +10,7 @@ export default function Vendidos() {
 
   useEffect(() => {
     axios
-      .get("https://rcv.gocastgroup.com:3000/obtenerDatos")
+      .get("https://rcv.gocastgroup.com:3100/obtenerDatos")
       .then((response) => {
         console.log('usuarios', response.data);
         setUsuarios(response.data);

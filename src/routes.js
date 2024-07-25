@@ -1,9 +1,9 @@
 // urls.js
 
 const urls = {
-    PostIntermediarios: "https://rcv.gocastgroup.com:3000/vivirseguros/agregar-intermediarios",
-    GetDatos: "https://rcv.gocastgroup.com:3000/vivirseguros/obtener-datos",
-    PostLogin: "https://rcv.gocastgroup.com:3000/login",
+    PostIntermediarios: "https://rcv.gocastgroup.com:3100/vivirseguros/agregar-intermediarios",
+    GetDatos: "https://rcv.gocastgroup.com:3100/vivirseguros/obtener-datos",
+    PostLogin: "https://rcv.gocastgroup.com:3100/login",
 };
 
 // const urls = {
