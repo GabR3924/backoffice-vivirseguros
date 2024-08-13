@@ -20,7 +20,7 @@ const Asociados = () => {
   const obtenerTiendas = () => {
     console.log("Llamando al servidor para obtener tiendas...");
     axios
-      .get("https://rcv.gocastgroup.com:3100/vivirseguros/get-intermediarios")
+      .get("https://rcv.gocastgroup.com:2053/vivirseguros/get-intermediarios")
       .then((response) => {
         if (response.data) {
           console.log("Tiendas obtenidas:", response.data);
@@ -40,7 +40,7 @@ const Asociados = () => {
 
   const handleCreateTienda = () => {
     axios
-      .post(urls.PostIntermediarios, nuevaTienda)
+      .post("https://rcv.gocastgroup.com:2053/vivirseguros/agregar-intermediarios", nuevaTienda)
       .then((response) => {
         console.log("Tienda creada correctamente");
         obtenerTiendas();
@@ -69,7 +69,7 @@ const Asociados = () => {
 
   const handleDeleteTienda = (codigo) => {
     axios
-      .delete("https://rcv.gocastgroup.com:3100/vivirseguros/eliminar-intermediario", {
+      .delete("https://rcv.gocastgroup.com:2053/vivirseguros/eliminar-intermediario", {
         data: { codigo }
       })
       .then((response) => {

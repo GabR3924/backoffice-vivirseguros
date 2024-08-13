@@ -6,7 +6,7 @@ const Reportes = () => {
 
   useEffect(() => {
     axios
-      .get('https://rcv.gocastgroup.com:3000/obtenerDatos')
+      .get('https://rcv.gocastgroup.com:2053/vivirseguros/obtener-datos')
       .then((response) => {
         console.log('usuarios', response.data);
         // Filtrar y formatear los datos
