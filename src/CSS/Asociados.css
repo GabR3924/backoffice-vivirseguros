@@ -8,37 +8,38 @@
   .asociados h1 {
     font-size: 28px;
     margin-bottom: 20px;
+    color: #787878;
   }
   
   .asociados h2 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #787878;
+
   }
   
   .asociados form {
     margin-bottom: 20px;
   }
   
-  .asociados form input {
-    width: 200px;
+  .asociados  input {
+    width: 20%;
     padding: 8px;
     font-size: 16px;
     margin-right: 10px;
+    border: none;
   }
   
   .asociados form button {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #002852;
     color: #fff;
     border: none;
     cursor: pointer;
   }
   
-  .asociados form button:hover {
-    background-color: #0056b3;
-  }
-  
+
   .asociados ul {
     list-style-type: none;
     padding: 0;
@@ -103,3 +104,34 @@
     color: #0056b3;
   }
   
+  .modal-asociados{
+    position: fixed;
+   top: 0;
+   right: 0;
+   width: 300px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -5px 0 20px rgba(138, 138, 138, 0.227);
+    z-index: 1000;
+    overflow-y: auto;
+   border-radius: 1.5rem;
+  }
+  
+  .modal-content {
+    padding: 1rem;
+  }
+  
+  .modal-content span {
+    display: block;
+    margin-bottom: 1rem;
+  }
+  
+  .modal-content img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .modal-content button {
+    display: block;
+    margin-top: 1rem;
+  }

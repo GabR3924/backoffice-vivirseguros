@@ -1,19 +1,31 @@
 // src/componentes/Nav.js
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../CSS/Nav.css';
-import logo from '../assets/logo.png';
+import React from "react";
+import { Link } from "react-router-dom";
+import "../CSS/Nav.css";
+import logo from "../assets/logo-azul.png";
+import { CiBank } from "react-icons/ci";
 
 export default function Nav() {
   return (
     <nav className="nav">
-      <img className='logo-nav' src={logo} alt="Logo" />
       <ul>
-        <li><Link to="/asociados">Asociados</Link></li>
-        <li><Link to="/vendidos">vendidos</Link></li>
-        <li><Link to="/reportes">Reportes</Link></li>
+        <li>
+          <CiBank />
+          <Link to="/">Inicio</Link>
+        </li>
+        <li>
+          <CiBank />
+          <Link to="/asociados">Asociados</Link>
+        </li>
+        <li>
+          <CiBank />
+          <Link to="/clientes">Clientes</Link>
+        </li>
       </ul>
+    <div className="img-cont">
+      <img className="logo-nav" src={logo} alt="Logo" />
+    </div>
     </nav>
   );
 }

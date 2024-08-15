@@ -1,21 +1,32 @@
-/* src/components/Nav.css */
 
 .nav {
+  position: relative;
     height: 100vh;
-    background-color: #e9e9e9;
-    color: white;
-    position: relative;
+    width: 15vw;
+    background-color: #ffffff;
+    color: rgb(0, 60, 134);
     top: 0;
     left: 0;
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: flex-start;
-    border-top-right-radius: 2rem;
-    border-bottom-right-radius: 2rem;
+    padding: 1.5rem;
   }
+
   
+  .img-cont{
+    position: relative;
+    top: 60%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
   .logo-nav{
+    position: relative;
+
     width: 60%;
   }
 
@@ -25,12 +36,16 @@
 }
 
   .nav li {
-    font-size: 25px;
+    font-size: 16px;
+    margin-top: 1rem;
   }
   
   .nav a {
-    color: white;
+    color: #6C6C6C;
     text-decoration: none;
+    margin-left: .21rem;
+
+
   }
   
   .nav a:hover {
