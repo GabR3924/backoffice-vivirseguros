@@ -18,7 +18,7 @@ const Login = ({ setAuthenticated }) => {
     try {
       console.log("Intentando iniciar sesión con:", username, password);
       const response = await axios.post(
-        "https://rcv.gocastgroup.com:2053/gocastgroup/login",
+        "https://rcv.gocastgroup.com:2053/vivirseguros/login",
         { username, password }
       );
 

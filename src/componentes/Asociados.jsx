@@ -38,7 +38,7 @@ const Asociados = () => {
     // } else {
     console.log("Llamando al servidor para obtener tiendas...");
     axios
-      .get("https://rcv.gocastgroup.com:2053/gocastgroup/get-intermediarios")
+      .get("https://rcv.gocastgroup.com:2053/vivirseguros/get-intermediarios")
       .then((response) => {
         if (response.data) {
           console.log("Tiendas obtenidas:", response.data);
@@ -63,11 +63,10 @@ const Asociados = () => {
 
   const handleCreateTienda = () => {
     axios
-      .post(urls.PostIntermediarios, nuevaTienda)
+      .post("https://rcv.gocastgroup.com:2053/vivirseguros/agregar-intermediarios", nuevaTienda)
       .then((response) => {
         console.log("Tienda creada correctamente");
-        obtenerTiendas();
-        setTiendas([...tiendas, response.data]);
+        obtenerTiendas();  // Ya actualiza la lista, no necesitas agregar manualmente la tienda
         setNuevaTienda({
           nombre: "",
           codigo: "",
@@ -77,7 +76,10 @@ const Asociados = () => {
       .catch((error) => {
         console.error("Error al crear la tienda:", error);
       });
+
+      obtenerTiendas()
   };
+  
 
   const handleTiendaInputChange = (id, value) => {
     const updatedTiendas = tiendas.map((tienda) =>
@@ -91,9 +93,27 @@ const Asociados = () => {
     setEditTiendaId(null);
   };
 
-  const handleDeleteTienda = (id) => {
-    // Aquí iría la lógica para eliminar la tienda en el backend
+  const handleDeleteTienda = (codigo) => {
+    if (window.confirm("¿Estás seguro de que quieres eliminar esta tienda?")) {
+      axios
+        .delete('https://rcv.gocastgroup.com:2053/vivirseguros/eliminar-intermediario', {
+          data: { codigo },  // Envía el código en el cuerpo de la solicitud
+        })
+        .then((response) => {
+          console.log("Tienda eliminada correctamente");
+          // Eliminar la tienda del estado local
+          obtenerTiendas(); // Actualiza la lista de tiendas después de eliminar
+
+        })
+        .catch((error) => {
+          console.error("Error al eliminar la tienda:", error);
+        });
+        obtenerTiendas()
+    }
+
   };
+  
+  
 
   return (
     <div className="asociados">
@@ -133,16 +153,20 @@ const Asociados = () => {
       <button type="submit">Agregar Tienda/Usuario</button>
     </form>
     <ul>
-      {tiendas.map((tienda) => (
-        <li key={tienda.id} className="tienda-item">
-          <div className="view-tienda">
-            <span>{tienda.nombre}</span>
-            <span>{tienda.codigo}</span>
-            <button onClick={() => handleShowModal(tienda)}>Ver más</button>
-          </div>
-        </li>
-      ))}
-    </ul>
+  {tiendas.map((tienda) => (
+    <li key={tienda.id} className="tienda-item">
+      <div className="view-tienda">
+        <span>{tienda.nombre}</span>
+        <span>{tienda.codigo}</span>
+        <button onClick={() => handleShowModal(tienda)}>Ver más</button>
+        <button onClick={() => handleDeleteTienda(tienda.id)}>
+          <FaTrash />
+        </button>
+      </div>
+    </li>
+  ))}
+</ul>
+
 
     {showModal && selectedTienda && (
       <div className="modal-asociados">

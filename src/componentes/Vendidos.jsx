@@ -9,7 +9,7 @@ export default function Vendidos() {
 
   useEffect(() => {
     axios
-      .get("https://rcv.gocastgroup.com:2053/gocastgroup/obtener-datos")
+      .get("https://rcv.gocastgroup.com:2053/vivirseguros/obtener-datos")
       .then((response) => {
         console.log('propietarios', response.data.propietarios);
         setPropietarios(response.data.propietarios);
