@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CSVLink } from 'react-csv';
 import '../CSS/Vendidos.css';
+
+// Asegúrate de definir los encabezados para el CSV
+const headers = [
+  { label: "ID Propietario", key: "id" },
+  { label: "Cédula", key: "cedula_propietario" },
+  { label: "Nombre", key: "nombre_propietario" },
+  { label: "Apellido", key: "apellido_propietario" },
+  { label: "Fecha de Nacimiento", key: "fecha_nacimiento" },
+  { label: "Año Vehículo", key: "ano_vehiculo" },
+  { label: "Marca Vehículo", key: "marca_vehiculo" },
+  { label: "Modelo Vehículo", key: "modelo_vehiculo" },
+  { label: "Placa Vehículo", key: "placa_vehiculo" },
+  { label: "Serial Vehículo", key: "serial_vehiculo" },
+  { label: "Referencia Pago", key: "paymentData_referencia" },
+  { label: "Monto Pago", key: "paymentData_monto" },
+  { label: "Banco Pago", key: "paymentData_banco" }
+];
 
 export default function Vendidos() {
   const [propietarios, setPropietarios] = useState([]);
@@ -37,11 +55,11 @@ export default function Vendidos() {
   };
 
   const obtenerVehiculoPorPropietario = (id_propietario) => {
-    return vehiculos.find(vehiculo => vehiculo.id_intermediario === id_propietario);
+    return vehiculos.find(vehiculo => vehiculo.id_intermediario === id_propietario) || {};
   };
 
   const obtenerPagoPorPropietario = (id_propietario) => {
-    return pagos.find(pago => pago.id_propietario === id_propietario);
+    return pagos.find(pago => pago.id_propietario === id_propietario) || {};
   };
 
   const convertBufferToBase64 = (buffer) => {
@@ -55,6 +73,28 @@ export default function Vendidos() {
   const handleModalClose = () => {
     setSelectedPropietario(null);
   };
+
+  // Crear una estructura adecuada para el CSV
+  const dataForCSV = propietarios.map(propietario => {
+    const vehiculo = obtenerVehiculoPorPropietario(propietario.id);
+    const pago = obtenerPagoPorPropietario(propietario.id);
+
+    return {
+      id: propietario.id,
+      cedula_propietario: propietario.cedula_propietario,
+      nombre_propietario: propietario.nombre_propietario,
+      apellido_propietario: propietario.apellido_propietario,
+      fecha_nacimiento: new Date(propietario.fecha_nacimiento).toLocaleDateString(),
+      ano_vehiculo: vehiculo.ano_vehiculo || 'No disponible',
+      marca_vehiculo: vehiculo.marca_vehiculo || 'No disponible',
+      modelo_vehiculo: vehiculo.modelo_vehiculo || 'No disponible',
+      placa_vehiculo: vehiculo.placa_vehiculo || 'No disponible',
+      serial_vehiculo: vehiculo.serial_vehiculo || 'No disponible',
+      paymentData_referencia: pago.paymentData_referencia || 'No disponible',
+      paymentData_monto: pago.paymentData_monto || 'No disponible',
+      paymentData_banco: pago.paymentData_banco || 'No disponible',
+    };
+  });
 
   return (
     <div className="propietarios">
@@ -75,6 +115,10 @@ export default function Vendidos() {
             <p className="fecha">
               {new Date(propietario.fecha_nacimiento).toLocaleDateString()}
             </p>
+            <p><strong>Cédula:</strong> {propietario.cedula_propietario}</p>
+            <p><strong>Nombre:</strong> {propietario.nombre_propietario}</p>
+            <p><strong>Apellido:</strong> {propietario.apellido_propietario}</p>
+
             <button onClick={() => setSelectedPropietario(propietario)}>
               Mostrar Detalles
             </button>
@@ -95,12 +139,12 @@ export default function Vendidos() {
             <h3>Información del Vehículo</h3>
             {obtenerVehiculoPorPropietario(selectedPropietario.id) ? (
               <>
-                <p><strong>Año:</strong> {vehiculo.ano_vehiculo || 'No disponible'}</p>
-                <p><strong>Marca:</strong> {vehiculo.marca_vehiculo}</p>
-                <p><strong>Modelo:</strong> {vehiculo.modelo_vehiculo || 'No disponible'}</p>
-                <p><strong>Placa:</strong> {vehiculo.placa_vehiculo}</p>
-                <p><strong>Serial:</strong> {vehiculo.serial_vehiculo}</p>
-                {vehiculo.imagen_vehiculo && (
+                <p><strong>Año:</strong> {vehiculos.ano_vehiculo || 'No disponible'}</p>
+                <p><strong>Marca:</strong> {vehiculos.marca_vehiculo || 'No disponible'}</p>
+                <p><strong>Modelo:</strong> {vehiculos.modelo_vehiculo || 'No disponible'}</p>
+                <p><strong>Placa:</strong> {vehiculos.placa_vehiculo || 'No disponible'}</p>
+                <p><strong>Serial:</strong> {vehiculos.serial_vehiculo || 'No disponible'}</p>
+                {vehiculos.imagen && (
                   <img
                     src={`data:image/jpeg;base64,${convertBufferToBase64(vehiculo.imagen_vehiculo)}`}
                     alt="Imagen del vehículo"
@@ -113,9 +157,9 @@ export default function Vendidos() {
             <h3>Información de Pago</h3>
             {obtenerPagoPorPropietario(selectedPropietario.id) ? (
               <>
-                <p><strong>Referencia:</strong> {pago.paymentData_referencia}</p>
-                <p><strong>Monto:</strong> {pago.paymentData_monto}</p>
-                <p><strong>Banco:</strong> {pago.paymentData_banco}</p>
+                <p><strong>Referencia:</strong> {pagos.paymentData_referencia || 'No disponible'}</p>
+                <p><strong>Monto:</strong> {pagos.paymentData_monto || 'No disponible'}</p>
+                <p><strong>Banco:</strong> {pagos.paymentData_banco || 'No disponible'}</p>
               </>
             ) : <p>No hay información de pago</p>}
 
@@ -132,6 +176,16 @@ export default function Vendidos() {
           </div>
         </div>
       )}
+
+      {/* Añade el enlace de descarga CSV */}
+      <CSVLink 
+        data={dataForCSV} 
+        headers={headers} 
+        filename="datos_propietarios.csv"
+        className="btn btn-primary"
+      >
+        Descargar CSV
+      </CSVLink>
     </div>
   );
 }
