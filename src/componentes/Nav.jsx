@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../CSS/Nav.css";
-import logo from "../assets/logo-azul.png";
+import logo from "../assets/figlogo.png";
 import { CiBank } from "react-icons/ci";
 
 export default function Nav() {
