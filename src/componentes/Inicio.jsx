@@ -1,74 +1,93 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import { CSVLink } from "react-csv";
+import axios from "axios";
 import "../CSS/Inicio.css";
 
 const Inicio = () => {
   const [fechaHora, setFechaHora] = useState(new Date());
   const [datos, setDatos] = useState([]);
-  const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
+    // Configurar el temporizador para actualizar la fecha y la hora cada segundo
     const timer = setInterval(() => {
       setFechaHora(new Date());
     }, 1000);
 
+    // Hacer la petición a la API para obtener los datos
     axios
       .get("https://rcv.gocastgroup.com:2053/vivirseguros/obtener-datos")
       .then((response) => {
         console.log("Datos recibidos:", response.data);
-        setDatos(response.data);  // Guardar todos los datos
-        prepararCSV(response.data);  // Preparar datos para CSV
+        setDatos(response.data);  // Almacenar todos los datos
       })
       .catch((error) => {
         console.error("Error al obtener los datos:", error);
       });
 
+    // Limpiar el temporizador cuando se desmonte el componente
     return () => clearInterval(timer);
   }, []);
 
-  const prepararCSV = (datos) => {
+  // Función para generar el reporte basado en los datos obtenidos
+  const generarReporte = () => {
     const { propietarios, vehiculos, pagos } = datos;
-
-    // Verificar que existen datos suficientes para construir el CSV
+  
     if (!propietarios || !vehiculos || !pagos || propietarios.length === 0) {
       console.log("No hay suficientes datos disponibles para generar el reporte.");
       return;
     }
-
-    // Convertir los datos en un array de objetos adecuado para CSVLink
-    const dataForCSV = propietarios.map((propietario, index) => {
-      const vehiculo = vehiculos[index] || {}; 
-      const pago = pagos[index] || {}; 
-
-      return {
-        "Cédula": propietario.cedula_propietario,
-        "Nombre": propietario.nombre_propietario,
-        "Apellido": propietario.apellido_propietario,
-        "Fecha de Nacimiento": new Date(propietario.fecha_nacimiento).toLocaleDateString(),
-        "Género": propietario.genero,
-        "Estado Civil": propietario.estado_civil,
-        "Teléfono": propietario.telefono,
-        "Correo": propietario.correo,
-        "Ciudad": propietario.ciudad,
-        "Estado": propietario.estado,
-        "Municipio": propietario.municipio,
-        "Dirección": propietario.direccion,
-        "Marca Vehículo": vehiculo.marca_vehiculo || "",
-        "Serial Vehículo": vehiculo.serial_vehiculo || "",
-        "Placa Vehículo": vehiculo.placa_vehiculo || "",
-        "Año Vehículo": vehiculo.ano_vehiculo || "",
-        "Referencia Pago": pago.paymentData_referencia || "",
-        "Monto Pago": pago.paymentData_monto || "",
-        "Banco Pago": pago.paymentData_banco || "",
-        "Plan": pago.plans || "",
-        "Extra Plan": pago.extra_plans || ""
-      };
-    });
-
-    // Actualizar el estado con los datos formateados para CSV
-    setCsvData(dataForCSV);
+  
+    // Creación del CSV
+    const csvData = [
+      [
+        "Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género", "Estado Civil", 
+        "Teléfono", "Correo", "Ciudad", "Estado", "Municipio", "Dirección", 
+        "Marca Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
+        "Referencia Pago", "Monto Pago", "Banco Pago", "Plan", "Extra Plan"
+      ],
+      ...propietarios.map((propietario, index) => {
+        const vehiculo = vehiculos[index] || {}; // Asegúrate de que haya un vehículo para este propietario
+        const pago = pagos[index] || {}; // Asegúrate de que haya un pago para este propietario
+  
+        return [
+          propietario.cedula_propietario,
+          propietario.nombre_propietario,
+          propietario.apellido_propietario,
+          new Date(propietario.fecha_nacimiento).toLocaleDateString(),
+          propietario.genero,
+          propietario.estado_civil,
+          propietario.telefono,
+          propietario.correo,
+          propietario.ciudad,
+          propietario.estado,
+          propietario.municipio,
+          propietario.direccion,
+          vehiculo.marca_vehiculo,
+          vehiculo.serial_vehiculo,
+          vehiculo.placa_vehiculo,
+          vehiculo.ano_vehiculo,
+          pago.referencia,
+          pago.monto,
+          pago.banco,
+          pago.plan,
+          pago.extra_plan
+        ];
+      })
+    ];
+  
+    // Generación del archivo CSV
+    const csvContent = "data:text/csv;charset=utf-8," 
+      + csvData.map(e => e.join(";")).join("\n");
+  
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "reporte_completo.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
+  
+  
 
   return (
     <div className="head">
@@ -79,13 +98,7 @@ const Inicio = () => {
 
       <div className="reportes-container">
         <h1>Reportes</h1>
-        <CSVLink 
-          data={csvData} 
-          filename={"reporte_completo.csv"}
-          className="btn btn-primary"
-        >
-          Descargar CSV
-        </CSVLink>
+        <button onClick={generarReporte}>Generar Reporte</button>
       </div>
     </div>
   );

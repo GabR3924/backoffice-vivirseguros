@@ -173,6 +173,7 @@ const Asociados = () => {
         <div className="modal-content">
           <span>{selectedTienda.nombre}</span>
           <span>{selectedTienda.codigo}</span>
+        <a href={selectedTienda.url} target="blank">link</a>
           {selectedTienda.qr ? (
             <img
               src={`data:image/png;base64,${selectedTienda.qr}`}
