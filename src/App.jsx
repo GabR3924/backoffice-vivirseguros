@@ -36,7 +36,7 @@ function MainContent() {
         <Route path="/" element={<Inicio />} />
         <Route path="/about" element={<Asociados />} />
         <Route path="/reportes" element={<Reportes />} />
-        <Route path="/clientes" element={<Clientes />} />
+        {/* <Route path="/clientes" element={<Clientes />} /> */}
         {/* Ruta por defecto */}
         <Route path="*" element={<Navigate to="/about" />} />
       </Routes>
