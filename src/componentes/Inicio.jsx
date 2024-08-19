@@ -39,7 +39,7 @@ const Inicio = () => {
     // Creación del CSV
     const csvData = [
       [
-        "Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género", "Estado Civil", 
+        "Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género",
         "Teléfono", "Correo", "Ciudad", "Estado", "Municipio", "Dirección", 
         "Marca Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
         "Referencia Pago", "Monto Pago", "Banco Pago", "Plan", "Extra Plan"
@@ -54,7 +54,6 @@ const Inicio = () => {
           propietario.apellido_propietario,
           new Date(propietario.fecha_nacimiento).toLocaleDateString(),
           propietario.genero,
-          propietario.estado_civil,
           propietario.telefono,
           propietario.correo,
           propietario.ciudad,
