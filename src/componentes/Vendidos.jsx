@@ -92,7 +92,7 @@ export default function Vendidos() {
             <p><strong>Apellido:</strong> {selectedPropietario.apellido_propietario}</p>
             <p><strong>Fecha de nacimiento:</strong> {new Date(selectedPropietario.fecha_nacimiento).toLocaleDateString()}</p>
 
-            <h3>Información del Vehículo</h3>
+            {/* <h3>Información del Vehículo</h3>
             {obtenerVehiculoPorPropietario(selectedPropietario.id) ? (
               <>
                 <p><strong>Año:</strong> {vehiculo.ano_vehiculo || 'No disponible'}</p>
@@ -117,7 +117,7 @@ export default function Vendidos() {
                 <p><strong>Monto:</strong> {pago.paymentData_monto}</p>
                 <p><strong>Banco:</strong> {pago.paymentData_banco}</p>
               </>
-            ) : <p>No hay información de pago</p>}
+            ) : <p>No hay información de pago</p>} */}
 
             {selectedPropietario.imagen_cedula && (
               <div>
