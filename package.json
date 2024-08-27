@@ -3,12 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "set NODE_OPTIONS=--max-old-space-size=4096 && vite",
+  "build": "set NODE_OPTIONS=--max-old-space-size=4096 && vite build",
+  "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+  "preview": "set NODE_OPTIONS=--max-old-space-size=4096 && vite preview"
+}
+,
   "dependencies": {
     "axios": "^1.7.2",
     "js-file-download": "^0.4.12",
