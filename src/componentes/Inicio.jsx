@@ -173,7 +173,7 @@ const Inicio = () => {
 
       <div className="reportes-container">
         <h1>Reportes</h1>
-        <button onClick={generarReporte}>Generar Reporte</button>
+        <button onClick={generarReporte}>Generar Reporte RCV</button>
       </div>
 
       <div className="reportes-container">
