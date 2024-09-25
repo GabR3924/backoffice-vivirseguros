@@ -7,7 +7,7 @@ import Reportes from './componentes/Reportes';
 import Clientes from './componentes/Vendidos';
 import Login from './componentes/Login';
 import Inicio from './componentes/Inicio';
-
+import Colegios from './componentes/Colegios';
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -34,6 +34,7 @@ function MainContent() {
       <div className="content">
       <Routes>
         <Route path="/" element={<Inicio />} />
+        <Route path="/colegios" element={<Colegios/>} />
         <Route path="/about" element={<Asociados />} />
         <Route path="/reportes" element={<Reportes />} />
         {/* <Route path="/clientes" element={<Clientes />} /> */}

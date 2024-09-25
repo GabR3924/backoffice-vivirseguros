@@ -18,6 +18,10 @@ export default function Nav() {
           <CiBank />
           <Link to="/asociados">Asociados</Link>
         </li>
+        <li>
+          <CiBank />
+          <Link to="/colegios">Colegios</Link>
+        </li>
         {/* <li>
           <CiBank />
           <Link to="/clientes">Clientes</Link>

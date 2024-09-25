@@ -1,0 +1,30 @@
+.colegios {
+    padding: 20px;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .alumno {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  h2, h3 {
+    text-align: center;
+  }
+  
+  input[type="date"] {
+    display: block;
+    margin: 10px auto;
+  }
+  
+  button {
+    margin: 0 5px;
+  }
+  
