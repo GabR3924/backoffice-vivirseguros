@@ -8,15 +8,11 @@ import urls from "../routes";
 
 const Asociados = () => {
   const [tiendas, setTiendas] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
   const [nuevaTienda, setNuevaTienda] = useState({
     nombre: "",
     codigo: "",
     categoria: "",
   });
-  const [editTiendaId, setEditTiendaId] = useState(null);
-  const [indexOfFirstItem, setIndexOfFirstItem] = useState(0);
-  const [indexOfLastItem, setIndexOfLastItem] = useState(10);
   const [showModal, setShowModal] = useState(false);
   const [selectedTienda, setSelectedTienda] = useState(null);
 
@@ -31,11 +27,6 @@ const Asociados = () => {
   };
 
   const obtenerTiendas = () => {
-    // const cachedTiendas = JSON.parse(localStorage.getItem("tiendas"));
-
-    // if (cachedTiendas) {
-    //   setTiendas(cachedTiendas);
-    // } else {
     console.log("Llamando al servidor para obtener tiendas...");
     axios
       .get("https://rcv.gocastgroup.com:2053/vivirseguros/get-intermediarios")
@@ -43,30 +34,25 @@ const Asociados = () => {
         if (response.data) {
           console.log("Tiendas obtenidas:", response.data);
           setTiendas(response.data);
-          // localStorage.setItem("tiendas", JSON.stringify(response.data));
         } else {
-          console.error(
-            "La respuesta del servidor no contiene los datos esperados."
-          );
+          console.error("La respuesta del servidor no contiene los datos esperados.");
         }
       })
       .catch((error) => {
         console.error("Error al obtener las tiendas:", error);
       });
-    // }
   };
 
   useEffect(() => {
-    // Llamar a obtenerTiendas al montar el componente
     obtenerTiendas();
-  }, []); // Solo se ejecuta una vez al montar el componente
+  }, []);
 
   const handleCreateTienda = () => {
     axios
       .post("https://rcv.gocastgroup.com:2053/vivirseguros/agregar-intermediarios", nuevaTienda)
       .then((response) => {
         console.log("Tienda creada correctamente");
-        obtenerTiendas();  // Ya actualiza la lista, no necesitas agregar manualmente la tienda
+        obtenerTiendas();
         setNuevaTienda({
           nombre: "",
           codigo: "",
@@ -76,117 +62,88 @@ const Asociados = () => {
       .catch((error) => {
         console.error("Error al crear la tienda:", error);
       });
-
-      obtenerTiendas()
-  };
-  
-
-  const handleTiendaInputChange = (id, value) => {
-    const updatedTiendas = tiendas.map((tienda) =>
-      tienda.id === id ? { ...tienda, NOMBRE: value } : tienda
-    );
-    setTiendas(updatedTiendas);
-  };
-
-  const handleUpdateTienda = (id, nombre) => {
-    // Aquí iría la lógica para actualizar la tienda en el backend
-    setEditTiendaId(null);
   };
 
   const handleDeleteTienda = (codigo) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar esta tienda?")) {
       axios
         .delete('https://rcv.gocastgroup.com:2053/vivirseguros/eliminar-intermediario', {
-          data: { codigo },  // Envía el código en el cuerpo de la solicitud
+          data: { codigo },
         })
         .then((response) => {
           console.log("Tienda eliminada correctamente");
-          // Eliminar la tienda del estado local
-          obtenerTiendas(); // Actualiza la lista de tiendas después de eliminar
-
+          obtenerTiendas();
         })
         .catch((error) => {
           console.error("Error al eliminar la tienda:", error);
         });
-        obtenerTiendas()
     }
-
   };
-  
-  
 
   return (
     <div className="asociados">
-    <h1>Asociados</h1>
-    <h2>Tiendas/Usuario</h2>
-    {/* Formulario para agregar una nueva tienda */}
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleCreateTienda();
-      }}
-    >
-      <input
-        type="text"
-        value={nuevaTienda.nombre}
-        onChange={(e) =>
-          setNuevaTienda({ ...nuevaTienda, nombre: e.target.value })
-        }
-        placeholder="Nombre de la Tienda/Usuario"
-      />
-      <input
-        type="text"
-        value={nuevaTienda.codigo}
-        onChange={(e) =>
-          setNuevaTienda({ ...nuevaTienda, codigo: e.target.value })
-        }
-        placeholder="Código"
-      />
-      <input
-        type="text"
-        value={nuevaTienda.categoria}
-        onChange={(e) =>
-          setNuevaTienda({ ...nuevaTienda, categoria: e.target.value })
-        }
-        placeholder="Categoría"
-      />
-      <button type="submit">Agregar Tienda/Usuario</button>
-    </form>
-    <ul>
-  {tiendas.map((tienda) => (
-    <li key={tienda.id} className="tienda-item">
-      <div className="view-tienda">
-        <span>{tienda.nombre}</span>
-        <span>{tienda.codigo}</span>
-        <button onClick={() => handleShowModal(tienda)}>Ver más</button>
-        <button onClick={() => handleDeleteTienda(tienda.id)}>
-          <FaTrash />
-        </button>
+      <h1>Asociados</h1>
+      <h2>Tiendas/Usuario</h2>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleCreateTienda();
+        }}
+      >
+        <input
+          type="text"
+          value={nuevaTienda.nombre}
+          onChange={(e) => setNuevaTienda({ ...nuevaTienda, nombre: e.target.value })}
+          placeholder="Nombre de la Tienda/Usuario"
+        />
+        <input
+          type="text"
+          value={nuevaTienda.codigo}
+          onChange={(e) => setNuevaTienda({ ...nuevaTienda, codigo: e.target.value })}
+          placeholder="Código"
+        />
+        <input
+          type="text"
+          value={nuevaTienda.categoria}
+          onChange={(e) => setNuevaTienda({ ...nuevaTienda, categoria: e.target.value })}
+          placeholder="Categoría"
+        />
+        <button type="submit">Agregar Tienda/Usuario</button>
+      </form>
+      <div className="grid-container">
+        {tiendas.map((tienda) => (
+          <div key={tienda.id} className="tienda-card">
+            <div className="view-tienda">
+              <span>{tienda.nombre}</span>
+              <span>{tienda.codigo}</span>
+              <button onClick={() => handleShowModal(tienda)}>Ver más</button>
+              <button onClick={() => handleDeleteTienda(tienda.codigo)}>
+                <FaTrash />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-    </li>
-  ))}
-</ul>
 
-
-    {showModal && selectedTienda && (
-      <div className="modal-asociados">
-        <div className="modal-content">
-          <span>{selectedTienda.nombre}</span>
-          <span>{selectedTienda.codigo}</span>
-        <a href={selectedTienda.url} target="blank">link</a>
-          {selectedTienda.qr ? (
-            <img
-              src={`data:image/png;base64,${selectedTienda.qr}`}
-              alt={`QR de ${selectedTienda.nombre}`}
-            />  
-          ) : (
-            <p>No QR Available</p>
-          )}
-          <button onClick={handleCloseModal}>Cerrar</button>
+      {showModal && selectedTienda && (
+        <div className="modal-asociados">
+          <div className="modal-content">
+            <span>{selectedTienda.nombre}</span>
+            <span>{selectedTienda.codigo}</span>
+            <a href={selectedTienda.url} target="blank">link</a>
+            {selectedTienda.qr ? (
+              <img
+                src={`data:image/png;base64,${selectedTienda.qr}`}
+                alt={`QR de ${selectedTienda.nombre}`}
+              />
+            ) : (
+              <p>No QR Available</p>
+            )}
+            <button onClick={handleCloseModal}>Cerrar</button>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
+      )}
+    </div>
   );
 };
 

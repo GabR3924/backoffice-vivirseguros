@@ -1,137 +1,23 @@
-/* Asociados.css */
 .asociados {
-  position: relative;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-  }
-  
-  .asociados h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #787878;
-  }
-  
-  .asociados h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #787878;
+  padding: 20px;
+}
 
-  }
-  
-  .asociados form {
-    margin-bottom: 20px;
-  }
-  
-  .asociados  input {
-    width: 20%;
-    padding: 8px;
-    font-size: 16px;
-    margin-right: 10px;
-    border: none;
-  }
-  
-  .asociados form button {
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #002852;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; /* Espacio entre tarjetas */
+}
 
-  .asociados ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .asociados .tienda-item {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .asociados .edit-tienda {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .asociados .edit-tienda input {
-    flex: 1;
-    padding: 8px;
-    font-size: 16px;
-    margin-right: 10px;
-  }
-  
-  .asociados .edit-tienda button {
-    padding: 8px 16px;
-    font-size: 14px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .asociados .edit-tienda button:hover {
-    background-color: #218838;
-  }
-  
-  .asociados .view-tienda {
-    display: flex;
-    align-items: center;
-  }
-  
-  .asociados .view-tienda span {
-    margin-right: 10px;
-  }
-  
-  .asociados .view-tienda img {
-    max-width: 100px;
-    height: auto;
-    margin-right: 10px;
-  }
-  
-  .asociados .iconAdmin {
-    cursor: pointer;
-    font-size: 20px;
-    margin-left: 10px;
-    color: #007bff;
-  }
-  
-  .asociados .iconAdmin:hover {
-    color: #0056b3;
-  }
-  
-  .modal-asociados{
-    position: fixed;
-   top: 0;
-   right: 0;
-   width: 300px;
-    height: 100%;
-    background: #fff;
-    box-shadow: -5px 0 20px rgba(138, 138, 138, 0.227);
-    z-index: 1000;
-    overflow-y: auto;
-   border-radius: 1.5rem;
-  }
-  
-  .modal-content {
-    padding: 1rem;
-  }
-  
-  .modal-content span {
-    display: block;
-    margin-bottom: 1rem;
-  }
-  
-  .modal-content img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .modal-content button {
-    display: block;
-    margin-top: 1rem;
-  }
+.tienda-card {
+  background-color: #f9f9f9; /* Fondo de las tarjetas */
+  border: 1px solid #ddd; /* Borde de las tarjetas */
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.view-tienda {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
