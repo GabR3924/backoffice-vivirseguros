@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../CSS/Colegios.css'; 
+import { ClipLoader } from 'react-spinners'; // Asegúrate de instalar react-spinners
 
 export default function Colegios() {
   const [alumnos, setAlumnos] = useState([]);
@@ -8,10 +9,12 @@ export default function Colegios() {
   const [alumnosMostrados, setAlumnosMostrados] = useState([]);
   const [fechas, setFechas] = useState([]);
   const [fechaSeleccionada, setFechaSeleccionada] = useState("");
+  const [cargando, setCargando] = useState(true); // Estado para controlar la carga
 
   const alumnosLimitados = alumnosMostrados.slice(0, 10);
 
   const cargarAlumnos = async () => {
+    setCargando(true); // Iniciar carga
     try {
       const response = await axios.get("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos");
       const alumnosData = response.data.alumno || [];
@@ -23,6 +26,8 @@ export default function Colegios() {
       setAlumnosMostrados(alumnosData);
     } catch (error) {
       console.error('Error al obtener los datos:', error);
+    } finally {
+      setCargando(false); // Terminar carga
     }
   };
 
@@ -82,7 +87,12 @@ export default function Colegios() {
 
       <h3>Alumnos</h3>
       <div className="grid-container">
-        {alumnosLimitados.length > 0 ? (
+        {cargando ? ( // Mostrar el ícono de carga si se está cargando
+          <div className="cargando">
+            <ClipLoader color="#000" loading={cargando} size={50} />
+            <p>Cargando...</p>
+          </div>
+        ) : alumnosLimitados.length > 0 ? (
           alumnosLimitados.map((alumno) => (
             <div key={alumno.id} className="alumno">
               <p className="fecha">
@@ -107,7 +117,7 @@ export default function Colegios() {
                     <p><strong>Referencia:</strong> {pago.referencia}</p>
                     <p><strong>Plan:</strong> {pago.plan}</p>
                   </div>
-                ))
+                ))  
               ) : (
                 <p>No se encontraron pagos para este alumno.</p>
               )}
