@@ -10,8 +10,13 @@ export default function Colegios() {
   const [fechas, setFechas] = useState([]);
   const [fechaSeleccionada, setFechaSeleccionada] = useState("");
   const [cargando, setCargando] = useState(true); // Estado para controlar la carga
+  const [paginaActual, setPaginaActual] = useState(1); // Estado para la página actual
+  const alumnosPorPagina = 10; // Cantidad de alumnos por página
 
-  const alumnosLimitados = alumnosMostrados.slice(0, 10);
+  // Calcular el índice inicial y final para la paginación
+  const indiceInicial = (paginaActual - 1) * alumnosPorPagina;
+  const indiceFinal = indiceInicial + alumnosPorPagina;
+  const alumnosPaginados = alumnosMostrados.slice(indiceInicial, indiceFinal);
 
   const cargarAlumnos = async () => {
     setCargando(true); // Iniciar carga
@@ -41,11 +46,13 @@ export default function Colegios() {
       new Date(alumno.fecha_nacimiento).toLocaleDateString() === fecha
     );
     setAlumnosMostrados(alumnosFiltrados);
+    setPaginaActual(1); // Reiniciar a la primera página cuando se selecciona una fecha
   };
 
   const quitarFiltro = () => {
     setAlumnosMostrados(alumnos); 
     setFechaSeleccionada(""); 
+    setPaginaActual(1); // Reiniciar a la primera página
   };
 
   const descargarImagen = (imagenCedula, nombre, apellido) => {
@@ -67,6 +74,19 @@ export default function Colegios() {
     return pagosAlumnos.filter(pago => pago.id_alumno === idAlumno);
   };
 
+  // Funciones para cambiar de página
+  const paginaSiguiente = () => {
+    if (indiceFinal < alumnosMostrados.length) {
+      setPaginaActual(paginaActual + 1);
+    }
+  };
+
+  const paginaAnterior = () => {
+    if (paginaActual > 1) {
+      setPaginaActual(paginaActual - 1);
+    }
+  };
+
   return (
     <div className="colegios">
       <h2>Datos de Alumnos y Pagos</h2>
@@ -85,6 +105,17 @@ export default function Colegios() {
         Quitar Filtro
       </button>
 
+        {/* Botones de paginación */}
+        <div className="paginacion">
+        <button onClick={paginaAnterior} disabled={paginaActual === 1}>
+          Anterior
+        </button>
+        <span>Página {paginaActual}</span>
+        <button onClick={paginaSiguiente} disabled={indiceFinal >= alumnosMostrados.length}>
+          Siguiente
+        </button>
+      </div>
+
       <h3>Alumnos</h3>
       <div className="grid-container">
         {cargando ? ( // Mostrar el ícono de carga si se está cargando
@@ -92,8 +123,8 @@ export default function Colegios() {
             <ClipLoader color="#000" loading={cargando} size={50} />
             <p>Cargando...</p>
           </div>
-        ) : alumnosLimitados.length > 0 ? (
-          alumnosLimitados.map((alumno) => (
+        ) : alumnosPaginados.length > 0 ? (
+          alumnosPaginados.map((alumno) => (
             <div key={alumno.id} className="alumno">
               <p className="fecha">
                 Fecha de Nacimiento: {new Date(alumno.fecha_nacimiento).toLocaleDateString()}
@@ -127,6 +158,8 @@ export default function Colegios() {
           <p>No se encontraron alumnos para la fecha seleccionada.</p>
         )}
       </div>
+
+    
     </div>
   );
 }
