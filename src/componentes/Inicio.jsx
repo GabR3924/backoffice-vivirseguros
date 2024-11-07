@@ -26,8 +26,7 @@ const Inicio = () => {
         console.error("Error al obtener los datos:", error);
       });
 
-    // Limpiar el temporizador cuando se desmonte el componente
-    return () => clearInterval(timer);
+   
   }, []);
 
   useEffect(() => {
