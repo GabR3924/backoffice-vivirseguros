@@ -22,10 +22,10 @@ export default function Nav() {
           <CiBank />
           <Link to="/colegios">Colegios</Link>
         </li>
-        {/* <li>
+        <li>
           <CiBank />
-          <Link to="/clientes">Clientes</Link>
-        </li> */}
+          <Link to="/asegurados">Asegurados</Link>
+        </li>
       </ul>
     <div className="img-cont">
       <img className="logo-nav" src={logo} alt="Logo" />

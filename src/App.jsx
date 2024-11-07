@@ -4,7 +4,7 @@ import './App.css';
 import Nav from './componentes/Nav';
 import Asociados from './componentes/Asociados';
 import Reportes from './componentes/Reportes';
-import Clientes from './componentes/Vendidos';
+import Asegurados from './componentes/Asegurados';
 import Login from './componentes/Login';
 import Inicio from './componentes/Inicio';
 import Colegios from './componentes/Colegios';
@@ -37,7 +37,7 @@ function MainContent() {
         <Route path="/colegios" element={<Colegios/>} />
         <Route path="/about" element={<Asociados />} />
         <Route path="/reportes" element={<Reportes />} />
-        {/* <Route path="/clientes" element={<Clientes />} /> */}
+        <Route path="/asegurados" element={<Asegurados />} />
         {/* Ruta por defecto */}
         <Route path="*" element={<Navigate to="/about" />} />
       </Routes>

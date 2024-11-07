@@ -9,7 +9,13 @@ const Inicio = () => {
   const [tasaDia, setTasaDia] = useState("");
 
   useEffect(() => {
+    
     // Hacer la petición a la API para obtener los datos
+
+    const timer = setInterval(() => {
+      setFechaHora(new Date());
+    }, 1000);
+    
     axios
       .get("https://apidev.gocastgroup.com/api/tasa_dia.php")
       .then((response) => {
