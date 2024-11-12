@@ -117,7 +117,7 @@ const Asociados = () => {
               <span>{tienda.nombre}</span>
               <span>{tienda.codigo}</span>
               <button onClick={() => handleShowModal(tienda)}>Ver más</button>
-              <button onClick={() => handleDeleteTienda(tienda.codigo)}>
+              <button onClick={() => handleDeleteTienda(tienda.id)}>
                 <FaTrash />
               </button>
             </div>
