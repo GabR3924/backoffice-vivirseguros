@@ -1,10 +1,10 @@
-/* Vendidos.css */
-.usuarios {
+/* Asegurados.css */
+.asegurados {
   font-family: Arial, sans-serif;
   padding: 20px;
 }
 
-.usuarios h2 {
+.asegurados h2 {
   font-size: 24px;
   margin-bottom: 20px;
 }
@@ -32,20 +32,20 @@
   background-color: #0056b3;
 }
 
-.usuario {
+.asegurado {
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.usuario .fecha {
+.asegurado .fecha {
   font-size: 14px;
   font-style: italic;
   margin-bottom: 10px;
 }
 
-.usuario button {
+.asegurado button {
   padding: 8px 16px;
   font-size: 14px;
   background-color: #28a745;
@@ -55,7 +55,7 @@
   margin-bottom: 10px;
 }
 
-.usuario button:hover {
+.asegurado button:hover {
   background-color: #218838;
 }
 
@@ -123,4 +123,96 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.asegurados {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.filtro-fecha {
+  margin-bottom: 15px;
+}
+
+.filtro-fecha input[type="date"] {
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filtro-fecha button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.filtro-fecha button:hover {
+  background-color: #0056b3;
+}
+
+.asegurado {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.asegurado h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.info-adicional img {
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 2rem;
+}
+
+.info-adicional button {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.info-adicional button:hover {
+  background-color: #218838;
+}
+
+.fecha {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
