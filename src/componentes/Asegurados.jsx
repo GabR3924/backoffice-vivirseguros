@@ -214,7 +214,7 @@ export default function Asegurados() {
                           <td>{vehiculo.color_vehiculo}</td>
                           <td>{vehiculo.ano_vehiculo}</td>
                           <td>{vehiculo.marca_vehiculo}</td>
-                          <td>{vehiculo.modelo}</td>
+                          <td>{vehiculo.modelo_vehiculo}</td>
                           <td>{vehiculo.placa_vehiculo}</td>
 
                           <td>{vehiculo.serial_vehiculo}</td>

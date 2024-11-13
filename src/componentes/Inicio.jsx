@@ -85,7 +85,7 @@ const Inicio = () => {
       [
         "ID intermediario","Codigo intermediario","Nombre intermediario","Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género",
         "Teléfono", "Correo", "Ciudad", "Estado", "Municipio", "Dirección", 
-        "Marca Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
+        "Marca Vehículo","Modelo Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
         "Referencia Pago", "Monto Pago", "Banco Pago", "Plan", "Extra Plan"
       ],
       ...asegurados.map((asegurado, index) => {
@@ -108,6 +108,7 @@ const Inicio = () => {
           asegurado.municipio,
           asegurado.direccion,
           vehiculo.marca_vehiculo,
+          vehiculo.modelo_vehiculo,
           vehiculo.serial_vehiculo,
           vehiculo.placa_vehiculo,
           vehiculo.ano_vehiculo,
