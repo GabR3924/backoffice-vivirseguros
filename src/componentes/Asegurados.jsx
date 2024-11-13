@@ -54,10 +54,14 @@ export default function Asegurados() {
     <div className="asegurados">
       <h2>Asegurados</h2>
       <div className="filtro-fecha">
-        <input type="date" value={fechaFiltro} onChange={handleFechaFiltroChange} />
+        <input
+          type="date"
+          value={fechaFiltro}
+          onChange={handleFechaFiltroChange}
+        />
         <button onClick={() => setFechaFiltro("")}>Limpiar Filtro</button>
       </div>
-  
+
       {aseguradosMostrados.map((asegurado) => (
         <div key={asegurado.id} className="asegurado">
           <p className="fecha">
@@ -66,7 +70,7 @@ export default function Asegurados() {
           <button onClick={() => handleToggleInfo(asegurado.id)}>
             {asegurado.expanded ? "Ocultar Detalles" : "Mostrar Detalles"}
           </button>
-  
+
           {asegurado.expanded && (
             <div className="info-adicional">
               <table>
@@ -95,7 +99,11 @@ export default function Asegurados() {
                   </tr>
                   <tr>
                     <td>Fecha de nacimiento</td>
-                    <td>{new Date(asegurado.fecha_nacimiento).toLocaleDateString()}</td>
+                    <td>
+                      {new Date(
+                        asegurado.fecha_nacimiento
+                      ).toLocaleDateString()}
+                    </td>
                   </tr>
                   <tr>
                     <td>Teléfono</td>
@@ -116,6 +124,22 @@ export default function Asegurados() {
                   <tr>
                     <td>Dirección</td>
                     <td>{asegurado.direccion}</td>
+                  </tr>
+                  <tr>
+                    <td>Cedula</td>
+                    {asegurado.imagen_cedula && (
+                <div>
+               
+                  <img
+                    src={asegurado.imagen_cedula}
+                    alt="Imagen Cédula"
+                    style={{ width: "100px", height: "auto" }}
+                  />
+                  {/* <button onClick={() => handleImageDownload(asegurado.imagen_cedula)}>
+                    Descargar Imagen
+                  </button> */}
+                </div>
+              )}
                   </tr>
                 </tbody>
               </table>
@@ -143,41 +167,57 @@ export default function Asegurados() {
                         <td>{pago.suma_cosas_dlrs}</td>
                         <td>{pago.suma_personas_dlrs}</td>
                         <td>{pago.extra_plan}</td>
-               
                       </tr>
                     ))}
                 </tbody>
               </table>
-  
-              {asegurado.imagen_cedula && (
-                <div>
-                  <p><strong>Imagen Cédula:</strong></p>
-                  <img src={asegurado.imagen_cedula} alt="Imagen Cédula" style={{ width: "100px", height: "auto" }} />
-                  {/* <button onClick={() => handleImageDownload(asegurado.imagen_cedula)}>
-                    Descargar Imagen
-                  </button> */}
-                </div>
-              )}
-  
-              <h4>Vehículos:</h4>
-              {vehiculos
-                .filter((vehiculo) => vehiculo.id_asegurado === asegurado.id)
-                .map((vehiculo) => (
-                  <div key={vehiculo.id}>
-                    <p><strong>Carnet de Circulación:</strong></p>
-                    <img src={vehiculo.imagen_vehiculo} alt="Imagen Vehículo" style={{ width: "100px", height: "auto" }} />
-                    {/* <button onClick={() => handleImageDownload(vehiculo.imagen_vehiculo)}>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Color</th>
+                    <th>anio</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Placa</th>
+                    <th>Serial</th>
+                    <th>Carnet de circulacion</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                    {vehiculos
+                      .filter(
+                        (vehiculo) => vehiculo.id_asegurado === asegurado.id
+                      )
+                      .map((vehiculo) => (
+                        <tr key={vehiculo.id}>
+                          <td>{vehiculo.color_vehiculo}</td>
+                          <td>{vehiculo.ano_vehiculo}</td>
+                          <td>{vehiculo.marca_vehiculo}</td>
+                          <td>{vehiculo.modelo}</td>
+                          <td>{vehiculo.placa_vehiculo}</td>
+
+                          <td>{vehiculo.serial_vehiculo}</td>
+
+                          <img
+                            src={vehiculo.imagen_vehiculo}
+                            alt="Imagen Vehículo"
+                            style={{ width: "100px", height: "auto" }}
+                          />
+                          {/* <button onClick={() => handleImageDownload(vehiculo.imagen_vehiculo)}>
                       Descargar Imagen
                     </button> */}
-                  </div>
-                ))}
-  
-          
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+
             </div>
           )}
         </div>
       ))}
     </div>
   );
-  
 }
