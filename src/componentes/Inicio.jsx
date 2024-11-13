@@ -83,7 +83,7 @@ const Inicio = () => {
     // Creación del CSV
     const csvData = [
       [
-        "ID intermediario","Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género",
+        "ID intermediario","Codigo intermediario","Nombre intermediario","Cédula", "Nombre", "Apellido", "Fecha de Nacimiento", "Género",
         "Teléfono", "Correo", "Ciudad", "Estado", "Municipio", "Dirección", 
         "Marca Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
         "Referencia Pago", "Monto Pago", "Banco Pago", "Plan", "Extra Plan"
@@ -94,6 +94,8 @@ const Inicio = () => {
   
         return [
           asegurado.id_intermediario,
+          asegurado.codigo_intermediario,
+          asegurado.nombre_intermediario,
           asegurado.cedula_propietario,
           asegurado.nombre_propietario,
           asegurado.apellido_propietario,

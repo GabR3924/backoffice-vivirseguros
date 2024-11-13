@@ -78,11 +78,16 @@ export default function Asegurados() {
                 <thead>
                   <tr>
                     <th>ID intermediario</th>
+                    <th>Codigo intermediario</th>
+                    <th>Nombre intermediario</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>  
                   <td>{asegurado.id_intermediario}</td>
+                  <td>{asegurado.codigo_intermediario}</td>
+                  <td>{asegurado.nombre_intermediario}</td>
+               
                   </tr>
                 </tbody>
               </table>
