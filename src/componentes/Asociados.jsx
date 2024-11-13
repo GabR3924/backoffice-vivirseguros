@@ -124,37 +124,79 @@ const Asociados = () => {
         />
         <button type="submit">Agregar Tienda/Usuario</button>
       </form>
-      <div className="grid-container">
-        {tiendas.map((tienda) => (
-          <div key={tienda.id} className="tienda-card">
-            <div className="view-tienda">
-              <span>{tienda.nombre}</span>
-              <span>{tienda.codigo}</span>
-              <button onClick={() => handleShowModal(tienda)}>Ver más</button>
-              <button onClick={() => handleDeleteTienda(tienda.id)}>
-                <FaTrash />
-              </button>
-            </div>
-          </div>
-        ))}
+
+      <div className="table-container">
+        <table className="tiendas-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Código</th>
+              <th>Categoría</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tiendas.map((tienda) => (
+              <tr key={tienda.id}>
+                <td>{tienda.id}</td>
+                <td>{tienda.nombre}</td>
+                <td>{tienda.codigo}</td>
+                <td>{tienda.categoria}</td>
+                <td>
+                  <button onClick={() => handleShowModal(tienda)}>
+                    Ver más
+                  </button>
+                  <button onClick={() => handleDeleteTienda(tienda.id)}>
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {showModal && selectedTienda && (
-        <div className="modal-asociados">
+        <div className="modal-overlay">
           <div className="modal-content">
-            <span>{selectedTienda.nombre}</span>
-            <span>{selectedTienda.codigo}</span>
-            <a href={selectedTienda.url} target="blank">
-              link
-            </a>
-            {selectedTienda.qr ? (
-              <img
-                src={selectedTienda.qr} // Aquí solo utilizas la URL de la imagen en AWS
-                alt={`QR de ${selectedTienda.nombre}`}
-              />
-            ) : (
-              <p>No QR Available</p>
-            )}
+            <table className="modal-table">
+              <tbody>
+                <tr>
+                  <td>Nombre:</td>
+                  <td>{selectedTienda.nombre}</td>
+                </tr>
+                <tr>
+                  <td>Código:</td>
+                  <td>{selectedTienda.codigo}</td>
+                </tr>
+                <tr>
+                  <td>Link:</td>
+                  <td>
+                    <a
+                      href={selectedTienda.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {selectedTienda.url}
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>QR:</td>
+                  <td>
+                    {selectedTienda.qr ? (
+                      <img
+                        src={selectedTienda.qr}
+                        alt={`QR de ${selectedTienda.nombre}`}
+                      />
+                    ) : (
+                      <p>No QR Available</p>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <button onClick={handleCloseModal}>Cerrar</button>
           </div>
         </div>

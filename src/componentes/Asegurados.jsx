@@ -72,7 +72,20 @@ export default function Asegurados() {
           </button>
 
           {asegurado.expanded && (
+            
             <div className="info-adicional">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID intermediario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>  
+                  <td>{asegurado.id_intermediario}</td>
+                  </tr>
+                </tbody>
+              </table>
               <table>
                 <thead>
                   <tr>
