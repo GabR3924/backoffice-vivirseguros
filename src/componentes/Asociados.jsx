@@ -35,7 +35,9 @@ const Asociados = () => {
           console.log("Tiendas obtenidas:", response.data);
           setTiendas(response.data);
         } else {
-          console.error("La respuesta del servidor no contiene los datos esperados.");
+          console.error(
+            "La respuesta del servidor no contiene los datos esperados."
+          );
         }
       })
       .catch((error) => {
@@ -49,7 +51,10 @@ const Asociados = () => {
 
   const handleCreateTienda = () => {
     axios
-      .post("https://rcv.gocastgroup.com:2053/vivirseguros/agregar-intermediarios", nuevaTienda)
+      .post(
+        "https://rcv.gocastgroup.com:2053/vivirseguros/agregar-intermediarios",
+        nuevaTienda
+      )
       .then((response) => {
         console.log("Tienda creada correctamente");
         obtenerTiendas();
@@ -67,9 +72,12 @@ const Asociados = () => {
   const handleDeleteTienda = (codigo) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar esta tienda?")) {
       axios
-        .delete('https://rcv.gocastgroup.com:2053/vivirseguros/eliminar-intermediario', {
-          data: { codigo },
-        })
+        .delete(
+          "https://rcv.gocastgroup.com:2053/vivirseguros/eliminar-intermediario",
+          {
+            data: { codigo },
+          }
+        )
         .then((response) => {
           console.log("Tienda eliminada correctamente");
           obtenerTiendas();
@@ -93,19 +101,25 @@ const Asociados = () => {
         <input
           type="text"
           value={nuevaTienda.nombre}
-          onChange={(e) => setNuevaTienda({ ...nuevaTienda, nombre: e.target.value })}
+          onChange={(e) =>
+            setNuevaTienda({ ...nuevaTienda, nombre: e.target.value })
+          }
           placeholder="Nombre de la Tienda/Usuario"
         />
         <input
           type="text"
           value={nuevaTienda.codigo}
-          onChange={(e) => setNuevaTienda({ ...nuevaTienda, codigo: e.target.value })}
+          onChange={(e) =>
+            setNuevaTienda({ ...nuevaTienda, codigo: e.target.value })
+          }
           placeholder="Código"
         />
         <input
           type="text"
           value={nuevaTienda.categoria}
-          onChange={(e) => setNuevaTienda({ ...nuevaTienda, categoria: e.target.value })}
+          onChange={(e) =>
+            setNuevaTienda({ ...nuevaTienda, categoria: e.target.value })
+          }
           placeholder="Categoría"
         />
         <button type="submit">Agregar Tienda/Usuario</button>
@@ -117,7 +131,7 @@ const Asociados = () => {
               <span>{tienda.nombre}</span>
               <span>{tienda.codigo}</span>
               <button onClick={() => handleShowModal(tienda)}>Ver más</button>
-              <button onClick={() => handleDeleteTienda(tienda.codigo)}>
+              <button onClick={() => handleDeleteTienda(tienda.id)}>
                 <FaTrash />
               </button>
             </div>
@@ -130,10 +144,12 @@ const Asociados = () => {
           <div className="modal-content">
             <span>{selectedTienda.nombre}</span>
             <span>{selectedTienda.codigo}</span>
-            <a href={selectedTienda.url} target="blank">link</a>
+            <a href={selectedTienda.url} target="blank">
+              link
+            </a>
             {selectedTienda.qr ? (
               <img
-                src={`data:image/png;base64,${selectedTienda.qr}`}
+                src={selectedTienda.qr} // Aquí solo utilizas la URL de la imagen en AWS
                 alt={`QR de ${selectedTienda.nombre}`}
               />
             ) : (

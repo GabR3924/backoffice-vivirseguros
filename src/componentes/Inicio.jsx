@@ -73,9 +73,9 @@ const Inicio = () => {
 
   // Función para generar el reporte basado en los datos obtenidos
   const generarReporte = () => {
-    const { propietarios, vehiculos, pagos } = datos;
+    const { asegurados, vehiculos, pagos } = datos;
   
-    if (!propietarios || !vehiculos || !pagos || propietarios.length === 0) {
+    if (!asegurados || !vehiculos || !pagos || asegurados.length === 0) {
       console.log("No hay suficientes datos disponibles para generar el reporte.");
       return;
     }
@@ -88,22 +88,22 @@ const Inicio = () => {
         "Marca Vehículo", "Serial Vehículo", "Placa Vehículo", "Año Vehículo", 
         "Referencia Pago", "Monto Pago", "Banco Pago", "Plan", "Extra Plan"
       ],
-      ...propietarios.map((propietario, index) => {
-        const vehiculo = vehiculos[index] || {}; // Asegúrate de que haya un vehículo para este propietario
-        const pago = pagos[index] || {}; // Asegúrate de que haya un pago para este propietario
+      ...asegurados.map((asegurado, index) => {
+        const vehiculo = vehiculos[index] || {}; // Asegúrate de que haya un vehículo para este asegurado
+        const pago = pagos[index] || {}; // Asegúrate de que haya un pago para este asegurado
   
         return [
-          propietario.cedula_propietario,
-          propietario.nombre_propietario,
-          propietario.apellido_propietario,
-          new Date(propietario.fecha_nacimiento).toLocaleDateString(),
-          propietario.genero,
-          propietario.telefono,
-          propietario.correo,
-          propietario.ciudad,
-          propietario.estado,
-          propietario.municipio,
-          propietario.direccion,
+          asegurado.cedula_propietario,
+          asegurado.nombre_propietario,
+          asegurado.apellido_propietario,
+          new Date(asegurado.fecha_nacimiento).toLocaleDateString(),
+          asegurado.genero,
+          asegurado.telefono,
+          asegurado.correo,
+          asegurado.ciudad,
+          asegurado.estado,
+          asegurado.municipio,
+          asegurado.direccion,
           vehiculo.marca_vehiculo,
           vehiculo.serial_vehiculo,
           vehiculo.placa_vehiculo,
