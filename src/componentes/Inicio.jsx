@@ -141,8 +141,8 @@ const Inicio = () => {
       return;
     }
   
-    const alumno = datosColegios.alumno || []; // Asegúrate de que `alumno` esté definido
-    const pagos_alumnos = datosColegios.pagos_alumnos || []; // Asegúrate de que `pagos_alumnos` esté definido
+    const alumno = datosColegios.alumnos || []; // Asegúrate de que `alumno` esté definido
+    const pagos_alumnos = datosColegios.pagos || []; // Asegúrate de que `pagos_alumnos` esté definido
   
     if (alumno.length === 0 || pagos_alumnos.length === 0) {
       console.log("No hay suficientes datos de alumno o pagos para generar el reporte.");
