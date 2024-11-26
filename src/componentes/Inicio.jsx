@@ -37,7 +37,7 @@ const Inicio = () => {
 
     // Hacer la petición a la API para obtener los datos
     axios
-      .get("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos")
+      .get("https://rcv.gocastgroup.com:2053/vivirseguros/reportes-colegios")
       .then((response) => {
         console.log("Datos recibidos:", response.data);
         setDatosColegios(response.data);  // Almacenar todos los datos recibidos

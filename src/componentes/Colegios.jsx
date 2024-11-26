@@ -21,7 +21,7 @@ export default function Colegios() {
   const cargarAlumnos = async () => {
     setCargando(true); // Iniciar carga
     try {
-      const response = await axios.get("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos");
+      const response = await axios.get("https://rcv.gocastgroup.com:2053/vivirseguros/reportes-colegios");
       const alumnosData = response.data.alumno || [];
       setAlumnos(alumnosData);
       setPagosAlumnos(response.data.pagos_alumnos || []);
