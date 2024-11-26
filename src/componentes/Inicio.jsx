@@ -149,6 +149,11 @@ const Inicio = () => {
       return;
     }
   
+    // Asegúrate de que los alumnos y los pagos tienen la misma longitud
+    if (alumno.length !== pagos_alumnos.length) {
+      console.warn(`La cantidad de alumnos (${alumno.length}) no coincide con la cantidad de pagos (${pagos_alumnos.length})`);
+    }
+  
     // Creación del CSV
     const csvData = [
       [
@@ -158,6 +163,7 @@ const Inicio = () => {
       ],
       ...alumno.map((alumno, index) => {
         const pago = pagos_alumnos[index] || {}; // Asegúrate de que haya un pago para este alumno
+        if (!pago) return null;  // Si no hay pago para este alumno, omitimos este registro
   
         return [
           alumno.cedula || "",
@@ -174,8 +180,11 @@ const Inicio = () => {
           pago.banco || "",
           pago.plan || ""
         ];
-      })
+      }).filter(row => row !== null) // Filtra los valores nulos (si el pago no existe)
     ];
+  
+    // Verificar la cantidad de registros generados para asegurarse de que no falten alumnos
+    console.log("Cantidad de registros para CSV:", csvData.length);
   
     // Generación del archivo CSV
     const csvContent = "data:text/csv;charset=utf-8," 
@@ -189,6 +198,7 @@ const Inicio = () => {
     link.click();
     document.body.removeChild(link);
   };
+  
   
 
   return (
