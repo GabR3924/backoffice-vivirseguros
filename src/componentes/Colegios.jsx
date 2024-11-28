@@ -24,8 +24,7 @@ export default function Colegios() {
       const response = await axios.get("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos-v");
       const alumnosData = response.data.alumno || [];
       setAlumnos(alumnosData);
-      setPagosAlumnos(response.data.pagos_alumnos || []);
-
+      console.log(response.data)
       const fechasUnicas = [...new Set(alumnosData.map(alumno => new Date(alumno.fecha_nacimiento).toLocaleDateString()))];
       setFechas(fechasUnicas);
       setAlumnosMostrados(alumnosData);
@@ -68,10 +67,6 @@ export default function Colegios() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url); // Liberar memoria
     }
-  };
-
-  const obtenerPagosAlumno = (idAlumno) => {
-    return pagosAlumnos.filter(pago => pago.id_alumno === idAlumno);
   };
 
   // Funciones para cambiar de página
@@ -139,19 +134,6 @@ export default function Colegios() {
                 Descargar Imagen de Cédula
               </button>
 
-              <h4>Pagos del Alumno</h4>
-              {obtenerPagosAlumno(alumno.id).length > 0 ? (
-                obtenerPagosAlumno(alumno.id).map((pago) => (
-                  <div key={pago.id} className="pago">
-                    <p><strong>Fecha de Pago:</strong> {new Date(pago.fecha_pago).toLocaleDateString()}</p>
-                    <p><strong>Monto:</strong> {pago.monto}</p>
-                    <p><strong>Referencia:</strong> {pago.referencia}</p>
-                    <p><strong>Plan:</strong> {pago.plan}</p>
-                  </div>
-                ))  
-              ) : (
-                <p>No se encontraron pagos para este alumno.</p>
-              )}
             </div>
           ))
         ) : (
