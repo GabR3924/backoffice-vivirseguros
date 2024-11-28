@@ -141,18 +141,16 @@ const Inicio = () => {
       return;
     }
   
-    const alumno = datosColegios.alumnos || []; // Asegúrate de que `alumno` esté definido
-    const pagos_alumnos = datosColegios.pagos || []; // Asegúrate de que `pagos_alumnos` esté definido
+    const alumno = datosColegios.alumnos || [];
+    const pagos_alumnos = datosColegios.pagos || [];
   
     if (alumno.length === 0 || pagos_alumnos.length === 0) {
       console.log("No hay suficientes datos de alumno o pagos para generar el reporte.");
       return;
     }
   
-    // Asegúrate de que los alumnos y los pagos tienen la misma longitud
-    if (alumno.length !== pagos_alumnos.length) {
-      console.warn(`La cantidad de alumnos (${alumno.length}) no coincide con la cantidad de pagos (${pagos_alumnos.length})`);
-    }
+    console.log('Total alumnos:', alumno.length);
+    console.log('Total pagos:', pagos_alumnos.length);
   
     // Creación del CSV
     const csvData = [
@@ -161,9 +159,9 @@ const Inicio = () => {
         "Correo", "Estado", "Dirección", "Fecha de Inicio", "Referencia Pago", 
         "Monto Pago", "Banco Pago", "Plan"
       ],
-      ...alumno.map((alumno, index) => {
-        const pago = pagos_alumnos[index] || {}; // Asegúrate de que haya un pago para este alumno
-        if (!pago) return null;  // Si no hay pago para este alumno, omitimos este registro
+      ...alumno.map(alumno => {
+        // Buscar el pago correspondiente al alumno por cédula
+        const pago = pagos_alumnos.find(pago => pago.id_alumno === alumno.id);
   
         return [
           alumno.cedula || "",
@@ -175,12 +173,12 @@ const Inicio = () => {
           alumno.estado || "",
           alumno.direccion || "",
           new Date(alumno.fecha_inicio).toLocaleString() || "",  // Agrega la fecha y hora de inicio
-          pago.referencia || "",
-          pago.monto || "",
-          pago.banco || "",
-          pago.plan || ""
+          pago ? pago.referencia : "",  // Verifica si existe pago
+          pago ? pago.monto : "",
+          pago ? pago.banco : "",
+          pago ? pago.plan : ""
         ];
-      }).filter(row => row !== null) // Filtra los valores nulos (si el pago no existe)
+      })
     ];
   
     // Verificar la cantidad de registros generados para asegurarse de que no falten alumnos
@@ -198,6 +196,7 @@ const Inicio = () => {
     link.click();
     document.body.removeChild(link);
   };
+  
   
   
 
