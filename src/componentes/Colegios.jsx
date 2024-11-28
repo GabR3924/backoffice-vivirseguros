@@ -25,8 +25,6 @@ export default function Colegios() {
       const alumnosData = response.data.alumno || [];
       setAlumnos(alumnosData);
       console.log(response.data)
-      const fechasUnicas = [...new Set(alumnosData.map(alumno => new Date(alumno.fecha_nacimiento).toLocaleDateString()))];
-      setFechas(fechasUnicas);
       setAlumnosMostrados(alumnosData);
     } catch (error) {
       console.error('Error al obtener los datos:', error);
@@ -86,19 +84,6 @@ export default function Colegios() {
     <div className="colegios">
       <h2>Datos de Alumnos y Pagos</h2>
 
-      <select 
-        value={fechaSeleccionada} 
-        onChange={(e) => manejarSeleccionFecha(e.target.value)}
-      >
-        <option value="">Selecciona una fecha</option>
-        {fechas.map((fecha, index) => (
-          <option key={index} value={fecha}>{fecha}</option>
-        ))}
-      </select>
-
-      <button onClick={quitarFiltro} disabled={!fechaSeleccionada}>
-        Quitar Filtro
-      </button>
 
         {/* Botones de paginación */}
         <div className="paginacion">
@@ -121,15 +106,12 @@ export default function Colegios() {
         ) : alumnosPaginados.length > 0 ? (
           alumnosPaginados.map((alumno) => (
             <div key={alumno.id} className="alumno">
-              <p className="fecha">
-                Fecha de Nacimiento: {new Date(alumno.fecha_nacimiento).toLocaleDateString()}
-              </p>
-              <p><strong>Nombre:</strong> {alumno.nombre}</p>
-              <p><strong>Apellido:</strong> {alumno.apellido}</p>
+             
+              <p><strong>Apellido:</strong> {alumno.cedula}</p>
 
               {/* Botón para descargar la imagen */}
               <button 
-                onClick={() => descargarImagen(alumno.imagen_cedula, alumno.nombre, alumno.apellido)}
+                onClick={() => descargarImagen(alumno.imagen_cedula, alumno.nombre)}
               >
                 Descargar Imagen de Cédula
               </button>
