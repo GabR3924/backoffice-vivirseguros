@@ -1,129 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../CSS/Colegios.css'; 
-import { ClipLoader } from 'react-spinners'; // Asegúrate de instalar react-spinners
+import React, { useState } from "react";
+import axios from "axios";
 
-export default function Colegios() {
-  const [alumnos, setAlumnos] = useState([]);
-  const [pagosAlumnos, setPagosAlumnos] = useState([]);
-  const [alumnosMostrados, setAlumnosMostrados] = useState([]);
-  const [fechas, setFechas] = useState([]);
-  const [fechaSeleccionada, setFechaSeleccionada] = useState("");
-  const [cargando, setCargando] = useState(true); // Estado para controlar la carga
-  const [paginaActual, setPaginaActual] = useState(1); // Estado para la página actual
-  const alumnosPorPagina = 10; // Cantidad de alumnos por página
+const Formulario = () => {
+  const [nombre, setNombre] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [imagen, setImagen] = useState(null);
 
-  // Calcular el índice inicial y final para la paginación
-  const indiceInicial = (paginaActual - 1) * alumnosPorPagina;
-  const indiceFinal = indiceInicial + alumnosPorPagina;
-  const alumnosPaginados = alumnosMostrados.slice(indiceInicial, indiceFinal);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImagen(file);
+  };
 
-  const cargarAlumnos = async () => {
-    setCargando(true); // Iniciar carga
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // FormData para enviar los datos al backend
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("cedula", cedula);
+    if (imagen) {
+      formData.append("imagen", imagen);
+    }
+
     try {
-      const response = await axios.get("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos-v");
-      const alumnosData = response.data.alumno || [];
-      setAlumnos(alumnosData);
-      console.log(response.data)
-      setAlumnosMostrados(alumnosData);
+      const response = await axios.post("https://rcv.gocastgroup.com:2053/vivirseguros/colegios-datos-v", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Formulario enviado correctamente", response.data);
     } catch (error) {
-      console.error('Error al obtener los datos:', error);
-    } finally {
-      setCargando(false); // Terminar carga
-    }
-  };
-
-  useEffect(() => {
-    cargarAlumnos(); // Llamada inicial para cargar alumnos
-  }, []);
-
-  const manejarSeleccionFecha = (fecha) => {
-    setFechaSeleccionada(fecha);
-    const alumnosFiltrados = alumnos.filter(alumno => 
-      new Date(alumno.fecha_nacimiento).toLocaleDateString() === fecha
-    );
-    setAlumnosMostrados(alumnosFiltrados);
-    setPaginaActual(1); // Reiniciar a la primera página cuando se selecciona una fecha
-  };
-
-  const quitarFiltro = () => {
-    setAlumnosMostrados(alumnos); 
-    setFechaSeleccionada(""); 
-    setPaginaActual(1); // Reiniciar a la primera página
-  };
-
-  const descargarImagen = (imagenCedula, nombre, apellido) => {
-    if (imagenCedula && imagenCedula.data) {
-      const blob = new Blob([new Uint8Array(imagenCedula.data)], { type: 'image/jpeg' });
-      const url = URL.createObjectURL(blob);
-      const nombreArchivo = `${nombre.trim()}_${apellido.trim()}.jpg`; // Usar nombre y apellido para el nombre del archivo
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = nombreArchivo; // Asignar el nombre del archivo
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url); // Liberar memoria
-    }
-  };
-
-  // Funciones para cambiar de página
-  const paginaSiguiente = () => {
-    if (indiceFinal < alumnosMostrados.length) {
-      setPaginaActual(paginaActual + 1);
-    }
-  };
-
-  const paginaAnterior = () => {
-    if (paginaActual > 1) {
-      setPaginaActual(paginaActual - 1);
+      console.error("Error al enviar el formulario", error);
     }
   };
 
   return (
-    <div className="colegios">
-      <h2>Datos de Alumnos y Pagos</h2>
-
-
-        {/* Botones de paginación */}
-        <div className="paginacion">
-        <button onClick={paginaAnterior} disabled={paginaActual === 1}>
-          Anterior
-        </button>
-        <span>Página {paginaActual}</span>
-        <button onClick={paginaSiguiente} disabled={indiceFinal >= alumnosMostrados.length}>
-          Siguiente
-        </button>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+        />
       </div>
-
-      <h3>Alumnos</h3>
-      <div className="grid-container">
-        {cargando ? ( // Mostrar el ícono de carga si se está cargando
-          <div className="cargando">
-            <ClipLoader color="#000" loading={cargando} size={50} />
-            <p>Cargando...</p>
-          </div>
-        ) : alumnosPaginados.length > 0 ? (
-          alumnosPaginados.map((alumno) => (
-            <div key={alumno.id} className="alumno">
-             
-              <p><strong>Apellido:</strong> {alumno.cedula}</p>
-
-              {/* Botón para descargar la imagen */}
-              <button 
-                onClick={() => descargarImagen(alumno.imagen_cedula, alumno.nombre)}
-              >
-                Descargar Imagen de Cédula
-              </button>
-
-            </div>
-          ))
-        ) : (
-          <p>No se encontraron alumnos para la fecha seleccionada.</p>
-        )}
+      <div>
+        <label htmlFor="cedula">Cédula:</label>
+        <input
+          type="text"
+          id="cedula"
+          value={cedula}
+          onChange={(e) => setCedula(e.target.value)}
+        />
       </div>
-
-    
-    </div>
+      <div>
+        <label htmlFor="imagen">Imagen:</label>
+        <input
+          type="file"
+          id="imagen"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
   );
-}
+};
+
+export default Formulario;
